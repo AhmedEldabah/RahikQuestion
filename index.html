@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Styles --- */
+        :root {
+            --primary-red: #ff4d6d;
+            --soft-pink: #ffb3c1;
+            --dark-red: #c9184a;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Nunito', sans-serif;
+            /* Romantic background with hearts */
+            background-color: var(--soft-pink);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 37.2l-2.8-2.8c-10-10-16.6-16.6-16.6-24.8 0-6.7 5.3-12 12-12 4.1 0 8 2 10.2 5.2C35 2 38.9 0 43 0c6.7 0 12 5.3 12 12 0 8.2-6.6 14.8-16.6 24.8L30 37.2z' fill='%23ff4d6d' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(201, 24, 74, 0.3);
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            border: 3px solid var(--primary-red);
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--dark-red);
+            font-size: 3.5em;
+            margin-bottom: 20px;
+        }
+
+        /* --- Photo Area Styles --- */
+        .photo-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .photo-placeholder {
+            width: 150px;
+            height: 150px;
+            background-color: #ffe6e9;
+            border: 2px dashed var(--primary-red);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-red);
+            font-weight: bold;
+            font-size: 0.9em;
+            /* Once you add real images, remove the styles above and uncomment the line below */
+            /* object-fit: cover; */
+        }
+
+
+        /* --- Button Styles --- */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 100px; /* Ensure space for growing button */
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: var(--primary-red);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            /* This transition is key to the smooth growing effect */
+            transition: font-size 0.2s ease, padding 0.2s ease, transform 0.2s ease;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.05);
+            background-color: var(--dark-red);
+        }
+
+        #noBtn {
+            background-color: #e0e0e0;
+            color: #555;
+        }
+
+        #noBtn:hover {
+            background-color: #d0d0d0;
+        }
+
+        /* --- Final Message Styles --- */
+        .hidden {
+            display: none;
+        }
+
+        #finalMessage {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+            text-align: left;
+            white-space: pre-wrap; /* Preserves spacing in your text */
+        }
+        
+        .heart-decoration {
+             font-size: 3em;
+             color: var(--primary-red);
+             margin-bottom: 20px;
+             display: block;
+             text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="questionArea">
+            <h1>Can i ask you a very hard question ya Rahik?</h1>
+
+            <div class="photo-gallery">
+    <img src="https://i.postimg.cc/ZB1TgWqk/Whats-App-Image-2026-02-14-at-7-21-00-PM.jpg" alt="Picture 1" class="photo-image">
+    <img src="https://i.postimg.cc/jwGs9DSG/Whats-App-Image-2026-02-14-at-7-21-00-PM-(2).jpg" alt="Picture 2" class="photo-image">
+    <img src="https://i.postimg.cc/sQtV8Mgk/Whats-App-Image-2026-02-14-at-7-21-00-PM-(3).jpg" alt="Picture 3" class="photo-image">
+</div>
+            <div class="buttons-container">
+                <button id="yesBtn" class="btn">Yes! 😍</button>
+                <button id="noBtn" class="btn">No 😢</button>
+            </div>
+        </div>
+
+        <div id="messageContainer" class="hidden">
+            <span class="heart-decoration">💖💖💖</span>
+            <div id="finalMessage">Hey love i’ve been sitting here since yesterday trying to figure out how to say this because it’s actually the first time i’ve ever asked anyone to be my valentine and i’m a little nervous but i just wanted to tell you that these past three months have been the best time of my life honestly even with all the ups and downs and i know we’ve had plenty of downs lately i’ve still loved every single second of it i’ve been counting and every one of those 95 days 20 hours and 43 minutes we’ve spent together has meant the world to me because you’re genuinely the greatest gift i’ve ever gotten and you just make everything better i’m so lucky i have you by my side and so ill ask you the big question would you give me the biggest honor to be my valentine</div>
+             <span class="heart-decoration" style="margin-top:20px;">💖💖💖</span>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        /* --- JavaScript Logic --- */
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionArea = document.getElementById('questionArea');
+        const messageContainer = document.getElementById('messageContainer');
+
+        let currentFontSize = 1.2; // Initial font size in rem
+        let currentPadding = 15; // Initial padding
+        let clickCount = 0;
+
+        // Fun "No" button texts (optional, you can remove these if you want it to stay "No")
+        const noTexts = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Last chance!",
+            "Surely not?",
+            "You might regret this!",
+            "Give it another thought!",
+            "Are you absolutely certain?",
+            "This could be a mistake!",
+            "Have a heart!",
+            "Don't be so cold!",
+            "Change of heart?",
+            "Wouldn't you reconsider?",
+            "Is that your final answer?",
+            "You're breaking my heart ;(",
+        ];
+
+        noBtn.addEventListener('click', () => {
+            clickCount++;
+
+            // 1. Make the Yes button grow bigger
+            currentFontSize += 0.8;
+            currentPadding += 5;
+            yesBtn.style.fontSize = `${currentFontSize}rem`;
+            yesBtn.style.padding = `${currentPadding}px ${currentPadding * 2}px`;
+
+            // 2. Change the text of the No button (optional fun)
+            if (clickCount < noTexts.length) {
+                 noBtn.innerText = noTexts[clickCount];
+            } else {
+                 noBtn.innerText = "Just click Yes already! 😠";
+            }
+
+            // If it gets too big, hide the no button entirely so they have to click yes
+            if (clickCount > 15) {
+                noBtn.style.display = 'none';
+            }
+        });
+
+        yesBtn.addEventListener('click', () => {
+            // 1. Hide the question area
+            questionArea.style.display = 'none';
+            
+            // 2. Show the special message
+            messageContainer.classList.remove('hidden');
+
+            // 3. Launch confetti!
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+            var timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            var particleCount = 50 * (timeLeft / duration);
+            // since particles fall down, start a bit higher than random
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        });
+    </script>
+</body>
+</html>
