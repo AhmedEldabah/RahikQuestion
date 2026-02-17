@@ -15,33 +15,39 @@
 
         body {
             margin: 0;
-            padding: 10px; /* Reduced padding for mobile */
+            padding: 10px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Nunito', sans-serif;
             background-color: var(--soft-pink);
+            
+            /* --- ZOOM PREVENTION FIXES --- */
+            touch-action: manipulation; /* Tells browser: "Don't wait for double tap, just click" */
+            -webkit-text-size-adjust: 100%; /* Prevents text inflation on orientation change */
+            /* --------------------------- */
+
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 37.2l-2.8-2.8c-10-10-16.6-16.6-16.6-24.8 0-6.7 5.3-12 12-12 4.1 0 8 2 10.2 5.2C35 2 38.9 0 43 0c6.7 0 12 5.3 12 12 0 8.2-6.6 14.8-16.6 24.8L30 37.2z' fill='%23ff4d6d' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-            overflow-x: hidden; /* Prevents scrollbar when button grows */
+            overflow-x: hidden;
         }
 
         .container {
             background: rgba(255, 255, 255, 0.95);
-            padding: 30px 20px; /* Less padding on sides for mobile */
+            padding: 30px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(201, 24, 74, 0.3);
             text-align: center;
             max-width: 600px;
             width: 100%;
             border: 3px solid var(--primary-red);
-            box-sizing: border-box; /* Ensures padding doesn't increase width */
+            box-sizing: border-box;
         }
 
         h1 {
             font-family: 'Dancing Script', cursive;
             color: var(--dark-red);
-            font-size: 2.8em; /* Slightly smaller default */
+            font-size: 2.8em;
             margin-bottom: 20px;
             line-height: 1.1;
         }
@@ -55,11 +61,10 @@
             flex-wrap: wrap;
         }
 
-        /* Style specifically for the images */
         .photo-image {
             width: 100px;
             height: 100px;
-            object-fit: cover; /* Ensures photos don't stretch weirdly */
+            object-fit: cover;
             border: 2px solid var(--primary-red);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -71,7 +76,7 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            flex-wrap: wrap; /* Allows buttons to stack if screen is tiny */
+            flex-wrap: wrap;
             min-height: 80px; 
         }
 
@@ -84,10 +89,12 @@
             font-family: 'Nunito', sans-serif;
             font-weight: bold;
             transition: all 0.3s ease;
-            white-space: nowrap; /* Keeps text on one line usually */
-            /* Prevent user selection so they don't highlight text while tapping fast */
+            white-space: nowrap;
+            /* Prevents blue highlighting when tapping fast */
             -webkit-user-select: none;
             user-select: none;
+            /* Ensures button registers tap immediately */
+            touch-action: manipulation;
         }
 
         #yesBtn {
@@ -95,10 +102,8 @@
             color: white;
             box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
             transition: font-size 0.2s ease, padding 0.2s ease, transform 0.2s ease;
-            
-            /* IMPORTANT: Prevents button from overflowing screen on mobile */
             max-width: 90vw; 
-            white-space: normal; /* Allows text to wrap if it gets huge */
+            white-space: normal;
             word-wrap: break-word;
         }
 
@@ -141,7 +146,6 @@
              text-align: center;
         }
 
-        /* Animation for showing the message */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -153,14 +157,14 @@
                 font-size: 2.2em;
             }
             .photo-image {
-                width: 85px; /* Smaller images on small phones */
+                width: 85px;
                 height: 85px;
             }
             .container {
                 padding: 20px 15px;
             }
             #finalMessage {
-                font-size: 1rem; /* Slightly smaller text reading */
+                font-size: 1rem;
             }
         }
     </style>
@@ -206,13 +210,19 @@ Would you give me the biggest honor to be my Valentine? 🌹</div>
 
     <script>
         /* --- JavaScript Logic --- */
+        
+        // 1. DISABLE DOUBLE TAP ZOOM (The Fix)
+        document.addEventListener('dblclick', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+
         const yesBtn = document.getElementById('yesBtn');
         const noBtn = document.getElementById('noBtn');
         const questionArea = document.getElementById('questionArea');
         const messageContainer = document.getElementById('messageContainer');
 
-        let currentFontSize = 1.2; // Initial font size in rem
-        let currentPadding = 12; // Initial padding
+        let currentFontSize = 1.2; 
+        let currentPadding = 12; 
         let clickCount = 0;
 
         const noTexts = [
@@ -240,43 +250,32 @@ Would you give me the biggest honor to be my Valentine? 🌹</div>
         noBtn.addEventListener('click', () => {
             clickCount++;
 
-            // 1. Make the Yes button grow bigger
-            // We grow it slower on mobile so it doesn't break the screen immediately
+            // Grow "Yes" button
             currentFontSize += 0.5; 
             currentPadding += 3;
-            
             yesBtn.style.fontSize = `${currentFontSize}rem`;
             yesBtn.style.padding = `${currentPadding}px ${currentPadding * 2}px`;
 
-            // 2. Change the text of the No button
+            // Update "No" text
             if (clickCount < noTexts.length) {
                  noBtn.innerText = noTexts[clickCount];
             } else {
-                 noBtn.innerText = "No"; // Reset or keep looping
+                 noBtn.innerText = "No"; 
             }
 
-            // 3. Move the No button randomly (Optional Fun Factor for mobile)
-            // Uncomment the lines below if you want the button to run away!
-            // const randomX = Math.random() * 50 - 25;
-            // const randomY = Math.random() * 50 - 25;
-            // noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
-
-            // If it gets too big, hide the no button entirely
+            // Hide "No" button eventually
             if (clickCount > 10) {
                 noBtn.style.display = 'none';
-                yesBtn.style.width = "100%"; // Take full width
+                yesBtn.style.width = "100%"; 
                 yesBtn.innerText = "JUST SAY YES ALREADY! ❤️";
             }
         });
 
         yesBtn.addEventListener('click', () => {
-            // 1. Hide the question area
             questionArea.style.display = 'none';
-            
-            // 2. Show the special message
             messageContainer.classList.remove('hidden');
 
-            // 3. Launch confetti!
+            // Launch Confetti
             var duration = 5 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -293,7 +292,6 @@ Would you give me the biggest honor to be my Valentine? 🌹</div>
                 }
 
                 var particleCount = 50 * (timeLeft / duration);
-                
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
